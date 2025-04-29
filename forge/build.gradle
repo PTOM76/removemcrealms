@@ -2,6 +2,7 @@ plugins {
     id 'multiloader-loader'
     id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+    id 'com.matthewprenger.cursegradle' version '1.+'
 }
 base {
     archivesName = "${mod_name}-forge-${minecraft_version}"
@@ -86,4 +87,25 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
+}
+
+apply plugin: "com.matthewprenger.cursegradle"
+
+if (System.getenv("CURSEFORGE_TOKEN") != null) {
+    curseforge {
+        apiKey = System.getenv("CURSEFORGE_TOKEN")
+        project {
+            id = '1254556'
+            releaseType = 'release'
+
+            addGameVersion "Forge"
+            addGameVersion "${support_mc_version}"
+
+            mainArtifact(project.jar)
+        }
+
+        options {
+            forgeGradleIntegration = false
+        }
+    }
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
+    id 'com.matthewprenger.cursegradle' version '1.+'
 }
 
 neoForge {
@@ -37,3 +38,24 @@ neoForge {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+apply plugin: "com.matthewprenger.cursegradle"
+
+if (System.getenv("CURSEFORGE_TOKEN") != null) {
+    curseforge {
+        apiKey = System.getenv("CURSEFORGE_TOKEN")
+        project {
+            id = '1254556'
+            releaseType = 'release'
+
+            addGameVersion "NeoForge"
+            addGameVersion "${support_mc_version}"
+
+            mainArtifact(project.jar)
+        }
+
+        options {
+            forgeGradleIntegration = false
+        }
+    }
+}

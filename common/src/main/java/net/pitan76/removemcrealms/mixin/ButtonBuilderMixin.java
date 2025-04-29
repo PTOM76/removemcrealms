@@ -18,14 +18,6 @@ public abstract class ButtonBuilderMixin {
 
     @Shadow public abstract Button.Builder size(int pWidth, int pHeight);
 
-    @Shadow public abstract Button.Builder bounds(int pX, int pY, int pWidth, int pHeight);
-
-    @Shadow private int width;
-
-    @Shadow private int y;
-
-    @Shadow public abstract Button.Builder pos(int pX, int pY);
-
     @Shadow public abstract Button.Builder width(int pWidth);
 
     @Inject(at = @At("HEAD"), method = "build")
@@ -47,6 +39,5 @@ public abstract class ButtonBuilderMixin {
         if (contents.getKey().equals("fml.menu.mods")) {
             width(200);
         }
-
     }
 }
